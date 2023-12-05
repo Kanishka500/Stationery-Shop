@@ -1,0 +1,156 @@
+#include<stdio.h>
+#include<windows.h>
+
+struct purchase_list {
+    int bill_no;
+    char itemName[10];
+    float price;
+    float amount;
+};
+
+void item_list();  //functions
+void save_bills();
+void main_menu();
+void time_print();
+void print_Bill();
+
+int op;
+
+// item list
+char item_names[10][100] =  {"1.Books","2.pens","3.pencils","4.pencil box","5.Ruler","6.Eraser","7.cutter","8.Glue","9.A4 Sheet","10.File"};  //  items names
+float item_pries[10]    =  {100.00,20.00,10.00,120.00,20.00,15.00,25.00,50.00,5.00,20.00};
+
+// purchase items
+
+
+int main() {
+
+
+    //print_Bill();
+    main_menu();
+
+    return 0;
+}
+void main_menu(){
+
+    int ch;
+    //system("cls");
+    printf("\n\t     ==========  Main Menu  =========\n ");
+    printf("\n\t\t   [1]__ Creat A Bill     ");
+    printf("\n\t\t   [2]__ Show All Bills     ");
+    printf("\n\t\t   [3]__ Exit      ");
+    printf("\n\n\t    ================================= ");
+    printf("\n\n Input your Choice:-   ");
+    scanf("%d",&ch);
+
+    switch(ch) {
+        case 1:
+            item_list();
+            break;
+
+        case 2:
+            break;
+
+        case 3:
+            printf("\t\t!! Thank You !!");
+            break;
+
+        default:
+            printf("\t     !! Invalid Input !! \n");
+            printf("\t     !! Try Again !! \n");
+            break;
+    }
+
+}
+
+void save_bills(){
+    int bill_no;
+    FILE *pur_item;
+    struct purchase_list p_list;
+    pur_item = fopen("purchase_data.txt", "a");
+    if (pur_item == NULL) {
+        printf("Couldn't open\n");
+        exit(0);
+    }else{
+        pur_item = fopen("purchase_data.txt", "r");
+        while(fscanf("%d %s %f %.2f", p_list.bill_no, p_list.itemName, p_list.price, p_list.amount) != EOF){
+            bill_no = p_list.bill_no;
+        }
+        char item__name;
+        int quantity;
+        float amount,total,price;
+        printf("Input quantity:-");
+        scanf("%d",& quantity);
+        item__name = item_names[op-1];
+        amount=item_pries[op-1] * quantity;
+        price = item_pries[op-1];
+        total=total+amount;
+        printf("Rs%.2f",total);
+        fprintf(pur_item,"%d %s %f %.2f\n",bill_no, item__name, price, total);
+    }
+    fclose(pur_item);
+
+}
+
+void item_list(){  // print items list and buy function
+
+    for(int x=0;x<=9;x++){
+        printf("%-10s",item_names[x]);
+        printf("\t\t%.2f\n" ,item_pries[x]); // left aline
+    }
+    printf("Input your Choice:-");
+    scanf("%d",&op);
+
+    switch(op){
+        case 1:
+            save_bills();
+            break;
+        case 2:
+            save_bills();
+            break;
+        case 3:
+            save_bills();
+            break;
+        case 4:
+            save_bills();
+            break;
+        case 5:
+            save_bills();
+            break;
+        case 6:
+            save_bills();
+            break;
+        case 7:
+            save_bills();
+            break;
+        case 8:
+            save_bills();
+            break;
+        case 9:
+            save_bills();
+            break;
+        case 10:
+            save_bills();
+            break;
+        default:
+            printf("\t     !! Invalid Input !! \n");
+            break;
+    }
+}
+
+void time_print(){
+
+    printf("Date:%s\n", __DATE__);
+    printf("Time:%s\n", __TIME__);
+}
+void print_Bill(){
+
+
+    printf("\t\t\t BooK Shop");
+    printf("\n\t\t============================\n");
+    time_print();
+    printf("Bill_N0:%d");
+    printf("\n--------------------------------------------");
+   // return bill_no;
+
+}

@@ -1,0 +1,193 @@
+#include<stdio.h>
+#include<windows.h>
+#include <string.h>
+#include <time.h>
+
+struct purchase_list {
+    int bill_no;
+    char itemName[10];
+    int quntity;
+    int price;
+    int amount;
+    int total;
+};
+
+void item_list();  //functions
+void save_bills();
+void main_menu();
+void time_print();
+void print_Bill();
+void billlist();
+void billlist();
+
+int op;
+
+// item list
+char item_names[10][100] =  {"1.Books","2.pens","3.pencils","4.pencil box","5.Ruler","6.Eraser","7.cutter","8.Glue","9.A4 Sheet","10.File"};  //  items names
+int item_pries[10]    =  {100,20,10,120,20,15,25,50,5,20};
+
+// purchase items
+
+
+int main() {
+
+
+    //print_Bill();
+    main_menu();
+
+    return 0;
+}
+void main_menu(){
+
+    int ch;
+    //system("cls");
+    printf("\n\t     ==========  Main Menu  =========\n ");
+    printf("\n\t\t   [1]__ Creat A Bill     ");
+    printf("\n\t\t   [2]__ Show All Bills     ");
+    printf("\n\t\t   [3]__ Exit      ");
+    printf("\n\n\t    ================================= ");
+    printf("\n\n Input your Choice:-   ");
+    scanf("%d",&ch);
+
+    switch(ch) {
+        case 1:
+            item_list();
+            billlist();
+            break;
+
+        case 2:
+            break;
+
+        case 3:
+            printf("\t\t!! Thank You !!");
+            break;
+
+        default:
+            printf("\t     !! Invalid Input !! \n");
+            printf("\t     !! Try Again !! \n");
+            break;
+    }
+
+}
+
+int billcheck=0;
+int billno;
+void save_bills(){
+
+    int check;
+    FILE *pur_item;
+    struct purchase_list p_list;
+    pur_item = fopen("purchase_data.txt", "a");
+    if (pur_item == NULL) {
+        printf("Couldn't open\n");
+        exit(0);
+    }else{
+        printf("Input quantity:-");
+        scanf("%d",&p_list.quntity);
+        if (billcheck!= 1){
+            printf("Enter bill no\n");
+            scanf("%d",&billno);
+        }
+        p_list.bill_no=billno;
+        strncpy(p_list.itemName, item_names[op-1], 10);
+        p_list.price=item_pries[op-1];
+        p_list.amount=item_pries[op-1]*p_list.quntity;
+        p_list.total=p_list.amount;
+        fwrite(&p_list,sizeof (p_list),1,pur_item);
+        printf("save successfully\n");
+
+        printf("thwa badu oneda 1 epanan one ekak\n");
+        scanf("%d",&check);
+        if (check == 1){
+            billcheck=1;
+            item_list();
+        } else{
+            billcheck=0;
+        }
+    }
+    fclose(pur_item);
+}
+
+void item_list(){  // print items list and buy function
+
+    for(int x=0;x<=9;x++){
+        printf("%-10s",item_names[x]);
+        printf("\t\t%.2f\n" ,(float )item_pries[x]); // left aline
+    }
+    printf("Input your Choice:-");
+    scanf("%d",&op);
+
+    switch(op){
+        case 1:
+            save_bills();
+            break;
+        case 2:
+            save_bills();
+            break;
+        case 3:
+            save_bills();
+            break;
+        case 4:
+            save_bills();
+            break;
+        case 5:
+            save_bills();
+            break;
+        case 6:
+            save_bills();
+            break;
+        case 7:
+            save_bills();
+            break;
+        case 8:
+            save_bills();
+            break;
+        case 9:
+            save_bills();
+            break;
+        case 10:
+            save_bills();
+            break;
+        default:
+            printf("\t     !! Invalid Input !! \n");
+            break;
+    }
+}
+
+
+void print_Bill(){
+
+
+    printf("\t\t\t BooK Shop");
+    printf("\n\t\t============================\n");
+    printf("Bill_N0:%d");
+    printf("\n--------------------------------------------");
+    // return bill_no;
+
+}
+
+void billlist(){
+    FILE *file;
+    struct purchase_list p_list;
+    int to;
+    file = fopen("purchase_data.txt", "r");
+
+    time_t tm;
+    time(&tm);
+
+    printf("........................................\n");
+    printf("%s\n", ctime(&tm));
+    printf("........................................\n");
+    printf("bill no %d\n",billno);
+    printf("........................................\n");
+    while (fread(&p_list,sizeof (p_list),1,file)){
+        if ( p_list.bill_no == billno){
+            printf("\nname %s \t",p_list.itemName);
+            printf("amount %d \t ",p_list.amount);
+            to=to+p_list.total;
+            printf("quantity %d \t\n",p_list.quntity);
+        }
+    }
+    printf("\ntotal %.2f",(float )to);
+    fclose(file);
+}
